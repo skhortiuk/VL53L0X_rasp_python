@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright © 2016, STMicroelectronics International N.V.
+ Copyright ï¿½ 2016, STMicroelectronics International N.V.
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -1303,13 +1303,9 @@ VL53L0X_Error VL53L0X_get_measurement_timing_budget_micro_seconds(VL53L0X_DEV De
 			}
 
 			if (SchedulerSequenceSteps.DssOn) {
-				*pMeasurementTimingBudgetMicroSeconds +=
-				2 * (MsrcDccTccTimeoutMicroSeconds +
-					DssOverheadMicroSeconds);
+				*pMeasurementTimingBudgetMicroSeconds += 2 * (MsrcDccTccTimeoutMicroSeconds + DssOverheadMicroSeconds);
 			} else if (SchedulerSequenceSteps.MsrcOn) {
-				*pMeasurementTimingBudgetMicroSeconds +=
-					MsrcDccTccTimeoutMicroSeconds +
-					MsrcOverheadMicroSeconds;
+				*pMeasurementTimingBudgetMicroSeconds += MsrcDccTccTimeoutMicroSeconds + MsrcOverheadMicroSeconds;
 			}
 		}
 	}

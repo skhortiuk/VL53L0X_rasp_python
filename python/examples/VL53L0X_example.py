@@ -2,7 +2,7 @@
 
 # MIT License
 # 
-# Copyright (c) 2017 John Bryan Moore, Sampath Vanimisetti
+# Copyright (c) 2017 John Bryan Moore
 # 
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,42 +22,27 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 import time
 import VL53L0X
 
-fig = plt.figure()
-ax1 = fig.add_subplot(1,1,1)
-
-xarr = []
-yarr = []
-count = 0
-
-def animate(i):
-    global count
-    distance = tof.get_distance()
-    count = count + 1
-    xarr.append(count)
-    yarr.append(distance)
-    time.sleep(timing/1000000.00)
-    ax1.clear()
-    ax1.plot(xarr,yarr)
-
 # Create a VL53L0X object
 tof = VL53L0X.VL53L0X()
-
+tof.connect()
 # Start ranging
-tof.start_ranging(VL53L0X.VL53L0X_BETTER_ACCURACY_MODE)
+tof.start_ranging(VL53L0X.Vl53l0xAccuracyMode.BETTER)
 
 timing = tof.get_timing()
-if (timing < 20000):
+if timing < 20000:
     timing = 20000
-print ("Timing %d ms" % (timing/1000))
+print("Timing %d ms" % (timing/1000))
 
-print ("Press ctrl-c to exit")
+for count in range(1, 101):
+    distance = tof.get_data()
+    if distance > 0:
+        print("%d mm, %d cm, %d" % (distance, (distance/10), count))
 
-ani = animation.FuncAnimation(fig, animate, interval=100)
-plt.show()
+    time.sleep(timing/1000000.00)
 
 tof.stop_ranging()
+tof.disconnect()
+

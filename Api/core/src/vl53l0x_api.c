@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright © 2016, STMicroelectronics International N.V.
+ Copyright ï¿½ 2016, STMicroelectronics International N.V.
  All rights reserved.
 
  Redistribution and use in source and binary forms, with or without
@@ -2325,17 +2325,14 @@ VL53L0X_Error VL53L0X_GetMeasurementDataReady(VL53L0X_DEV Dev,
 	InterruptConfig = VL53L0X_GETDEVICESPECIFICPARAMETER(Dev,
 		Pin0GpioFunctionality);
 
-	if (InterruptConfig ==
-		VL53L0X_REG_SYSTEM_INTERRUPT_GPIO_NEW_SAMPLE_READY) {
+	if (InterruptConfig == VL53L0X_REG_SYSTEM_INTERRUPT_GPIO_NEW_SAMPLE_READY) {
 		Status = VL53L0X_GetInterruptMaskStatus(Dev, &InterruptMask);
-		if (InterruptMask ==
-		VL53L0X_REG_SYSTEM_INTERRUPT_GPIO_NEW_SAMPLE_READY)
+		if (InterruptMask == VL53L0X_REG_SYSTEM_INTERRUPT_GPIO_NEW_SAMPLE_READY)
 			*pMeasurementDataReady = 1;
 		else
 			*pMeasurementDataReady = 0;
 	} else {
-		Status = VL53L0X_RdByte(Dev, VL53L0X_REG_RESULT_RANGE_STATUS,
-			&SysRangeStatusRegister);
+		Status = VL53L0X_RdByte(Dev, VL53L0X_REG_RESULT_RANGE_STATUS, &SysRangeStatusRegister);
 		if (Status == VL53L0X_ERROR_NONE) {
 			if (SysRangeStatusRegister & 0x01)
 				*pMeasurementDataReady = 1;
